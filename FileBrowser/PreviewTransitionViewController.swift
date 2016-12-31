@@ -1,5 +1,5 @@
 //
-//  SecondViewController.swift
+//  PreviewTransitionViewController.swift
 //  FileBrowser
 //
 //  Created by Tyler hostager on 12/31/16.
@@ -7,13 +7,27 @@
 //
 
 import UIKit
+import QuickLook
 
-class SecondViewController: UIViewController {
+
+///
+/// Wrap transition view in container
+///
+class PreviewTransitionViewController: UIViewController {
+    
+    @IBOutlet weak var containerView: UIView!
+    
+    let quickLookPreviewController = QLPreviewController()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         // Do any additional setup after loading the view.
+        
+        self.addChildViewController(quickLookPreviewController)
+        containerView.addSubview(quickLookPreviewController.view)
+        quickLookPreviewController.view.frame = containerView.bounds
+        quickLookPreviewController.didMove(toParentViewController: self)
     }
 
     override func didReceiveMemoryWarning() {

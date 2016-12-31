@@ -12,13 +12,37 @@ import UIKit
 /// 
 /// The file browser navigation controller
 ///
-open class FileBrowserNavController: UINavigationController {
-    // MARK: - Constant vars
+open class FileBrowser: UINavigationController {
+    // init parser from shared instance
     let parser = FileParser.Constants.kSharedInstance
-    
-    // MARK: - Init vars
+    // create container for the files list
     var fileList: FileListViewController?
 
+    
+    // MARK: - File types to exclude from the file browser
+    
+    /// Types to exclude from the file browser
+    open var excludesFileExtensions: [String]? {
+        didSet {
+            parser.excludesFileExtensions = excludesFileExtensions
+        }
+    }
+    
+    /// Paths to exclude from the file browser
+    open var excludesFilePaths: [URL]? {
+        didSet {
+            parser.excludesFilePaths = excludesFilePaths
+        }
+    }
+    
+    /// Overrides the default preview/actionsheet behavior in favor of custom file heading
+    open var didSelectFile: ((FBFile) -> ())? {
+        didSet {
+            fileList?.didSelectFile = didSelectFile
+        }
+    }
+    
+    
     
     // MARK: - Constructors
     
